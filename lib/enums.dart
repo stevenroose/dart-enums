@@ -7,22 +7,39 @@ abstract class Enum {
 
   const Enum();
 
+  /**
+   * Get the instance of [enumType] with the name [name].
+   */
   static Enum valueOf(Type enumType, String name) {
     if(!reflectType(enumType).isSubtypeOf(reflectType(Enum)))
       throw new ArgumentError("Given enumType is not a subtype of Enum");
     return _getEnumData(enumType).index[name];
   }
 
+  /**
+   * Get an iterator that iterates over all instances or
+   * the enum [enumType].
+   */
   static Iterable<Enum> values(Type enumType) {
     if(!reflectType(enumType).isSubtypeOf(reflectType(Enum)))
       throw new ArgumentError("Given enumType is not a subtype of Enum");
     return _getEnumData(enumType).values.keys;
   }
 
+  /**
+   * Get the ordinal value of this enum instance. This value depends on
+   * the order in which the instances are declared.
+   */
   int get ordinal => _getEnumData(this.runtimeType).values[this].ordinal;
 
+  /**
+   * Get the name of this enum instance.
+   */
   String get name => _getEnumData(this.runtimeType).values[this].name;
 
+  /**
+   * Returns the name of this enum instance.
+   */
   @override
   String toString() => name;
 
