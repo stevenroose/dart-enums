@@ -15,7 +15,7 @@ class MyEnum extends Enum {
 
   // these two lines are required to add support for values and valueOf
   static MyEnum valueOf(String name) => Enum.valueOf(MyEnum, name);
-  static Iterable<MyEnum> get values => Enum.values(MyEnum);
+  static List<MyEnum> get values => Enum.values(MyEnum);
 
   // your own implementation
   final int myValue;
@@ -23,11 +23,11 @@ class MyEnum extends Enum {
 }
 
 void main() {
-  print(MyEnum.nr1.ordinal);            // prints 0
-  print(MyEnum.nr1.name);               // prints nr1
-  print(MyEnum.nr1.toString());         // prints nr1
-  print(MyEnum.valueOf("nr1").ordinal); // prints 0
-  print(MyEnum.values.last.ordinal);    // prints 2
-  print(MyEnum.values.last.myValue);    // prints 15
+  print(MyEnum.nr1.index);            // prints 0
+  print(MyEnum.nr1.toString());       // prints nr1
+  print(MyEnum.valueOf("nr1").index); // prints 0
+  print(MyEnum.values[1].toString())  // prints nr2
+  print(MyEnum.values.last.index)     // prints 2
+  print(MyEnum.values.last.myValue);  // prints 15
 }  
 ```
