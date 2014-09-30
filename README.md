@@ -18,6 +18,16 @@ class MyEnum extends Enum {
   static Iterable<MyEnum> get values => Enum.values(MyEnum);
 
   // your own implementation
-  final int value;
-  const MyEnum._(this.value);
+  final int myValue;
+  const MyEnum._(this.myValue);
+}
+
+void main() {
+  print(MyEnum.nr1.ordinal);            // prints 0
+  print(MyEnum.nr1.name);               // prints nr1
+  print(MyEnum.nr1.toString());         // prints nr1
+  print(MyEnum.valueOf("nr1").ordinal); // prints 0
+  print(MyEnum.values.last.ordinal);    // prints 2
+  print(MyEnum.values.last.myValue);    // prints 15
+}  
 ```
