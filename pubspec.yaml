@@ -1,5 +1,5 @@
 name: enums
-version: 0.1.0
+version: 0.2.0
 author: Steven Roose <stevenroose@gmail.com>
 description: A library to create Enums in Dart.
 homepage: https://github.com/stevenroose/dart-enums

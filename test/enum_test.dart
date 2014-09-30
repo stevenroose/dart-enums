@@ -10,7 +10,7 @@ class TestEnum extends Enum {
   static const TestEnum nr3 = const TestEnum._(15);
 
   static TestEnum valueOf(String name) => Enum.valueOf(TestEnum, name);
-  static Iterable<TestEnum> get values => Enum.values(TestEnum);
+  static List<TestEnum> get values => Enum.values(TestEnum);
 
   final int value;
   const TestEnum._(this.value);
@@ -29,14 +29,14 @@ class OtherTestEnum extends Enum {
 
 void main() {
   test("ordinal", () {
-    expect(TestEnum.nr1.ordinal, equals(0));
-    expect(TestEnum.nr2.ordinal, equals(1));
-    expect(TestEnum.nr3.ordinal, equals(2));
+    expect(TestEnum.nr1.index, equals(0));
+    expect(TestEnum.nr2.index, equals(1));
+    expect(TestEnum.nr3.index, equals(2));
   });
   test("name", () {
-    expect(TestEnum.nr1.name, equals("nr1"));
-    expect(TestEnum.nr2.name, equals("nr2"));
-    expect(TestEnum.nr3.name, equals("nr3"));
+    expect(TestEnum.nr1.toString(), equals("nr1"));
+    expect(TestEnum.nr2.toString(), equals("nr2"));
+    expect(TestEnum.nr3.toString(), equals("nr3"));
   });
   test("valueOf", () {
     expect(TestEnum.valueOf("nr1"), equals(TestEnum.nr1));
@@ -46,9 +46,10 @@ void main() {
   });
   test("values", () {
     expect(TestEnum.values, equals([TestEnum.nr1, TestEnum.nr2, TestEnum.nr3]));
+    expect(TestEnum.values[1], equals(TestEnum.nr2));
   });
   test("other", () {
-    expect(OtherTestEnum.nr1.ordinal, equals(0));
+    expect(OtherTestEnum.nr1.index, equals(0));
     expect(OtherTestEnum.valueOf("nr1"), equals(OtherTestEnum.nr1));
   });
 }

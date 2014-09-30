@@ -20,28 +20,23 @@ abstract class Enum {
    * Get an iterator that iterates over all instances or
    * the enum [enumType].
    */
-  static Iterable<Enum> values(Type enumType) {
+  static List<Enum> values(Type enumType) {
     if(!reflectType(enumType).isSubtypeOf(reflectType(Enum)))
       throw new ArgumentError("Given enumType is not a subtype of Enum");
-    return _getEnumData(enumType).values.keys;
+    return new List.from(_getEnumData(enumType).values.keys);
   }
 
   /**
-   * Get the ordinal value of this enum instance. This value depends on
+   * Get the index value of this enum instance. This value depends on
    * the order in which the instances are declared.
    */
-  int get ordinal => _getEnumData(this.runtimeType).values[this].ordinal;
+  int get index => _getEnumData(this.runtimeType).values[this].index;
 
   /**
-   * Get the name of this enum instance.
-   */
-  String get name => _getEnumData(this.runtimeType).values[this].name;
-
-  /**
-   * Returns the name of this enum instance.
+   * Returns the string representation of this enum instance.
    */
   @override
-  String toString() => name;
+  String toString() => _getEnumData(this.runtimeType).values[this].name;
 
   static Map<Type, _EnumData> _enumData;
 
@@ -77,7 +72,7 @@ class _EnumData<E> {
 }
 
 class _EnumValueMetaData<E> {
-  final int ordinal;
+  final int index;
   final String name;
-  const _EnumValueMetaData(this.ordinal, this.name);
+  const _EnumValueMetaData(this.index, this.name);
 }
