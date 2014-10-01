@@ -10,7 +10,9 @@ abstract class Enum {
   /**
    * Get the instance of [enumType] with the name [name].
    */
-  static Enum valueOf(Type enumType, String name) {
+  static Enum valueOf(Type enumType, dynamic name) {
+    if(name is! String)
+      name = name.toString();
     if(!reflectType(enumType).isSubtypeOf(reflectType(Enum)))
       throw new ArgumentError("Given enumType is not a subtype of Enum");
     return _getEnumData(enumType).index[name];
