@@ -27,6 +27,20 @@ class OtherTestEnum extends Enum {
   const OtherTestEnum._(this.value);
 }
 
+class InstanceTestEnum extends Enum {
+  static final InstanceTestEnum nr1 = new InstanceTestEnum._("id");
+
+  static Map<String, InstanceTestEnum> _map = new Map<String, InstanceTestEnum>();
+  InstanceTestEnum._(String id) {
+    _map[id] = this;
+  }
+  static InstanceTestEnum goodById(id) {
+    Enum.ensureValuesInstantiated(InstanceTestEnum);
+    return _map[id];
+  }
+  static InstanceTestEnum badById(id) => _map[id];
+}
+
 void main() {
   test("ordinal", () {
     expect(TestEnum.nr1.index, equals(0));
@@ -48,8 +62,15 @@ void main() {
     expect(TestEnum.values, equals([TestEnum.nr1, TestEnum.nr2, TestEnum.nr3]));
     expect(TestEnum.values[1], equals(TestEnum.nr2));
   });
+  test("ensureInstantiation", () {
+//    expect(InstanceTestEnum.badById("id"), isNull); // this can change in future Dart versions
+    expect(InstanceTestEnum.goodById("id"), isNotNull);
+    expect(InstanceTestEnum.goodById("id"), equals(InstanceTestEnum.nr1));
+  });
   test("other", () {
     expect(OtherTestEnum.nr1.index, equals(0));
     expect(OtherTestEnum.valueOf("nr1"), equals(OtherTestEnum.nr1));
+    expect(TestEnum.nr2.toString(), equals("nr2"));
+    expect(OtherTestEnum.nr3.toString(), equals("nr3"));
   });
 }

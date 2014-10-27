@@ -29,6 +29,37 @@ abstract class Enum {
   }
 
   /**
+   * This method makes sure all static enum instances are instantiated.
+   *
+   * This can be required when the constructor handles static data. E.g.:
+   *
+   *     class MyEnum extends Enum {
+   *       static final MyEnum VALUE1 = new MyEnum._("identifier");
+   *       MyEnum._(String identifier) {
+   *         _identifierMap[identifier] = this;
+   *       }
+   *       static Map<String, MyEnum> _identifierMap = new Map<String, MyEnum>();
+   *       static MyEnum fromIdentifier(String id) {
+   *         Enum.ensureValuesInstantiated(MyEnum);
+   *         return _identifierMap[id];
+   *       }
+   *     }
+   */
+  static void ensureValuesInstantiated(Type enumType) {
+    if(_enumData != null && _enumData.containsKey(enumType))
+      return;
+    TypeMirror tm = reflectType(enumType);
+    ClassMirror cm = reflectClass(enumType);
+    int ordinal = 0;
+    for(var dec in cm.declarations.values) {
+      if(dec is VariableMirror && dec.isStatic && dec.type == tm) {
+        var instance = cm.getField(dec.simpleName).reflectee;
+      }
+    }
+    _enumData[enumType] == null;
+  }
+
+  /**
    * Get the index value of this enum instance. This value depends on
    * the order in which the instances are declared.
    */
@@ -45,7 +76,7 @@ abstract class Enum {
   static _EnumData _getEnumData(Type type) {
     if(_enumData == null)
       _enumData = new Map<Type, _EnumData>();
-    if(!_enumData.containsKey(type))
+    if(!_enumData.containsKey(type) || _enumData[type] == null)
       _enumData[type] = _generateEnumData(type);
     return _enumData[type];
   }
