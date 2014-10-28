@@ -1,7 +1,8 @@
 library enums;
 
-import "dart:mirrors";
 import "dart:collection";
+@MirrorsUsed(override: '*', targets: 'Enum')
+import "dart:mirrors";
 
 abstract class Enum {
 
