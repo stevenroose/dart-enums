@@ -27,6 +27,17 @@ class OtherTestEnum extends Enum {
   const OtherTestEnum._(this.value);
 }
 
+class OtherTestEnum2 extends Enum {
+  static const OtherTestEnum2 nr1 = const OtherTestEnum2._(5);
+  static const OtherTestEnum2 nr2 = const OtherTestEnum2._(10);
+  static const OtherTestEnum2 nr3 = const OtherTestEnum2._(15);
+
+  static OtherTestEnum2 valueOf(String name) => Enum.valueOf(OtherTestEnum2, name);
+
+  final int value;
+  const OtherTestEnum2._(this.value);
+}
+
 class InstanceTestEnum extends Enum {
   static final InstanceTestEnum nr1 = new InstanceTestEnum._("id");
 
@@ -51,6 +62,9 @@ void main() {
     expect(TestEnum.nr1.toString(), equals("nr1"));
     expect(TestEnum.nr2.toString(), equals("nr2"));
     expect(TestEnum.nr3.toString(), equals("nr3"));
+  });
+  test("name-ready", () {
+    expect(OtherTestEnum2.nr1.toString(), equals("nr1"));
   });
   test("valueOf", () {
     expect(TestEnum.valueOf("nr1"), equals(TestEnum.nr1));
