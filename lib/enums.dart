@@ -4,6 +4,15 @@ import "dart:collection";
 @MirrorsUsed(override: '*', targets: 'Enum')
 import "dart:mirrors";
 
+/**
+ * Extend this class to define an Enumeration.
+ *
+ * Add the following lines to have the MyEnum.values and MyEnum.valueOf functions:
+ *
+ *     static MyEnum valueOf(String e) => Enum.valueOf(MyEnum, e);
+ *     static List<MyEnum> get values => Enum.values(MyEnum);
+ *
+ */
 abstract class Enum {
 
   const Enum();
@@ -26,7 +35,7 @@ abstract class Enum {
   static List<Enum> values(Type enumType) {
     if(!reflectType(enumType).isSubtypeOf(reflectType(Enum)))
       throw new ArgumentError("Given enumType is not a subtype of Enum");
-    return new List.from(_getEnumData(enumType).values.keys);
+    return new UnmodifiableListView(new List.from(_getEnumData(enumType).values.keys));
   }
 
   /**
